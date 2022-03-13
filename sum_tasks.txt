@@ -1,0 +1,51 @@
+Variables:
+int index = 0;
+int currentValue = 0;
+int sum = 0;
+int data[]={32,432,4324,43,22};
+
+
+TASK MAIN ReadValue{
+    triggers[index]
+    inputs[currentValue, data]
+
+    logic{
+        currentValue = data[index];
+    }
+
+    actions[currentValue]
+}
+
+TASK IncIndex{
+    triggers[currentValue]
+    inputs[index]
+
+    logic{
+        int local_index=index + 1;
+        if(local_index < 5){
+            index = local_index;
+        }
+    }
+
+    actions[index]
+}
+
+TASK Sum{
+    triggers[currentValue]
+    inputs[sum]
+
+    logic{
+        sum = sum + currentValue;
+    }
+
+    actions[sum]
+}
+
+
+//Graph
+ReadValue   -> IncIndex
+ReadValue   -> Sum
+IncIndex    -> ReadValue
+Sum         -> NULL
+
+
